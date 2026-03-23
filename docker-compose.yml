@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  app:
+    image: student-management
+    container_name: student-app
+    ports:
+      - "8081:8080"
