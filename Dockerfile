@@ -1,14 +1,11 @@
-# Base image with Java 17
-FROM eclipse-temurin:17-jdk
+# Smaller runtime image for the packaged Spring Boot app
+FROM eclipse-temurin:17-jre
 
-# Set working directory inside container
 WORKDIR /app
 
-# Copy the Spring Boot JAR into container
-COPY target/*.jar app.jar
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
 
-# Expose Spring Boot port
-EXPOSE 8080
+EXPOSE 8089
 
-# Run the Spring Boot application
-CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -1,5 +1,6 @@
 package tn.esprit.studentmanagement.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,9 +22,11 @@ public class Enrollment {
     private Status status;
 
     @ManyToOne
+    @JsonIgnoreProperties({"department", "enrollments"})
     private Student student;
 
     @ManyToOne
+    @JsonIgnoreProperties("enrollments")
     private Course course;
 
 

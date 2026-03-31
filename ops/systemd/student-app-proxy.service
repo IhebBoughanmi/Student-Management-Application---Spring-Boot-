@@ -1,0 +1,15 @@
+[Unit]
+Description=Expose Student App from Minikube on VM port 8081
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=vagrant
+WorkingDirectory=/vagrant/student-management
+ExecStart=/vagrant/student-management/ops/minikube-nodeport-proxy.sh 8081 30007
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
