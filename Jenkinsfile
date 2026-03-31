@@ -46,7 +46,8 @@ pipeline {
                 sh '''
                   docker rm -f mysql-db student-app || true
                   docker compose down --remove-orphans || true
-                  docker compose up -d --build
+                  docker compose pull
+                  docker compose up -d
                 '''
             }
         }
