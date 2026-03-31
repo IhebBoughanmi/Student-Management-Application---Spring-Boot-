@@ -2,16 +2,23 @@ services:
   mysql:
     image: mysql:8
     container_name: mysql-db
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: studentdb
     ports:
       - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
 
   app:
-    build: .
     image: ihebboughanmi/student-management:latest
     container_name: student-app
+    restart: unless-stopped
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/studentdb?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
@@ -19,4 +26,5 @@ services:
     ports:
       - "8082:8089"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
